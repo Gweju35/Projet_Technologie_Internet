@@ -1,0 +1,6 @@
+{
+  "require": {
+    "illuminate/view": "^11.0",
+    "illuminate/events": "^11.0"
+  }
+}
