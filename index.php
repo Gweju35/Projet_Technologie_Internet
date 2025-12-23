@@ -34,6 +34,37 @@ $factory = new Factory(
     $events
 );
 
-// Affichage
-echo $factory->make('home')->render();
+// Router simple
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+// Gestion des routes
+switch ($uri) {
+    case '/':
+    case '/home':
+        echo $factory->make('home')->render();
+        break;
+
+    case '/login':
+        echo $factory->make('login', [
+            'currentPage' => 'login'
+        ])->render();
+        break;
+
+    case '/register':
+        echo $factory->make('register')->render();
+        break;
+
+    case '/dashboard':
+        echo $factory->make('dashboard')->render();
+        break;
+
+    case '/about':
+        echo $factory->make('about')->render();
+        break;
+
+    default:
+        http_response_code(404);
+        echo $factory->make('404')->render();
+        break;
+}
 
