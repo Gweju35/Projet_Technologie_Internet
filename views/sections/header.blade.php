@@ -1,15 +1,14 @@
-<header>
-    <div class="container">
-        <div class="logo">
-            <h1>MonSite</h1>
+<header class="bg-[#2c3e50] text-white py-4 shadow-md sticky top-0 z-50">
+    <div class="container flex items-center justify-between">
+        <div class="logo w-fit text-pf-green">
+            <h1 class="text-3xl text-pj-blue">MonSite</h1>
         </div>
-        <nav>
-            <ul class="nav-menu">
-                <li><a href="/home" class="active">Accueil</a></li>
-                <li><a href="/about">À propos</a></li>
-                <li><a href="/login">Connexion</a></li>
-                <li><a href="/register" class="btn-register">Inscription</a></li>
-                <li><a href="/dashboard">Dashboard</a></li>
+        <nav class="w-fit">
+            <ul class="nav-menu flex list-none gap-8">
+                <li><a href="/home" class="active text-white no-underline transition-colors duration-300 ease-in-out font-medium">Accueil</a></li>
+                <li><a href="/about" class="text-white no-underline transition-colors duration-300 ease-in-out font-medium">À propos</a></li>
+                <li><a href="/dashboard" class="text-white no-underline transition-colors duration-300 ease-in-out font-medium">Dashboard</a></li>
+                <li><a href="/login" class="bg-pj-blue py-2 px-6 rounded-md hover:bg-[#2980b9] hover:!text-white transition-all duration-300 ease-in-out">Connexion</a></li>
             </ul>
         </nav>
     </div>

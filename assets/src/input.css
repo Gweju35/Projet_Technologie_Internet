@@ -1,88 +1,19 @@
 @import "tailwindcss";
+@import "./header.css";
+
 @config "../tailwind.config.js";
 
-
-/* ===== RESET & BASE ===== */
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
 body {
+    @apply text-[#333] bg-[#f4f4f4];
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #f4f4f4;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
 
-/* ===== HEADER ===== */
-header {
-    background-color: #2c3e50;
-    color: white;
-    padding: 1rem 0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
 
-header .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo h1 {
-    font-size: 1.8rem;
-    color: #3498db;
-}
-
-.nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-}
-
-.nav-menu a {
-    color: white;
-    text-decoration: none;
-    transition: color 0.3s;
-    font-weight: 500;
-}
-
-.nav-menu a:hover,
-.nav-menu a.active {
-    color: #3498db;
-}
-
-.btn-register {
-    background-color: #3498db;
-    padding: 0.5rem 1.5rem;
-    border-radius: 5px;
-}
-
-.btn-register:hover {
-    background-color: #2980b9;
-    color: white !important;
-}
-
-.btn-logout {
-    background-color: #e74c3c;
-    padding: 0.5rem 1.5rem;
-    border-radius: 5px;
-}
-
-.btn-logout:hover {
-    background-color: #c0392b;
-    color: white !important;
-}
 
 /* ===== HERO SECTION ===== */
 .hero {
