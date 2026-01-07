@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="/public/css/style.css">
 </head>
 <body>
+@include("sections.header")
 @yield('content')
+@include("sections.footer")
 <script src="/public/js/main.js"></script>
 </body>
 </html>

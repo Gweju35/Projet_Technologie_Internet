@@ -1,6 +1,6 @@
-<header class="bg-[#2c3e50] text-white py-4 shadow-md sticky top-0 z-50">
+<header class="bg-pj-greyblue text-white py-4 shadow-md sticky top-0 z-50">
     <div class="container flex items-center justify-between">
-        <div class="logo w-fit text-pf-green">
+        <div class="logo w-fit">
             <h1 class="text-3xl text-pj-blue">MonSite</h1>
         </div>
         <nav class="w-fit">
