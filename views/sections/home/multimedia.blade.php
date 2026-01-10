@@ -1,11 +1,11 @@
 <!-- Section Multimédia -->
 <section class="multimedia py-16 px-0 bg-pj-white-2 text-pj-greyblue">
     <div class="container">
-        <h2 class="text-center text-4xl mb-12">Découvrez en images et sons</h2>
+        <h2 class="text-center text-4xl mb-12 font-grotesk font-bold">Découvrez en images et sons</h2>
 
         <!-- Vidéo -->
         <div class="media-item bg-pj-white p-8 rounded-lg mb-8 shadow-md">
-            <h3 class="mb-4 text-pj-greyblue">Vidéo de présentation</h3>
+            <h3 class="mb-4 text-pj-blue font-bold">Vidéo de présentation</h3>
             <video controls class="w-full max-w-3xl block my-0 mx-auto rounded-md">
                 <source src="assets/video/demo.mp4" type="video/mp4">
                 Votre navigateur ne supporte pas la balise vidéo.
@@ -14,7 +14,7 @@
 
         <!-- Audio -->
         <div class="media-item bg-pj-white p-8 rounded-lg mb-8 shadow-md">
-            <h3 class="mb-4 text-pj-greyblue">Podcast / Audio</h3>
+            <h3 class="mb-4 text-pj-blue font-bold">Podcast / Audio</h3>
             <audio controls class="w-full max-w-3xl block my-0 mx-auto rounded-md">
                 <source src="assets/audio/sample.mp3" type="audio/mpeg">
                 Votre navigateur ne supporte pas la balise audio.

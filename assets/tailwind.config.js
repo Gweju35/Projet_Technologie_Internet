@@ -1,5 +1,3 @@
-// import containerQueries from '@tailwindcss/container-queries'
-
 export default {
     content: [
         "../views/**/*.blade.php",
@@ -23,5 +21,11 @@ export default {
                 'pj-white-2': '#ecf0f1',
             },
         },
+        fontFamily: {
+            'grotesk' : ['Space Grotesk', 'sans-serif'],
+            'fira': ['Fira Code', 'sans-serif'],
+        }
     }
 }
+
+
