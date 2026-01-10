@@ -18,16 +18,10 @@ use Illuminate\View\Compilers\BladeCompiler;
 // ========================================
 session_start();
 
-
 // ========================================
 // BASE URL pour les assets
 // ========================================
 $baseUrl = '/ENSIM/Project';
-
-// ========================================
-// SERVEUR ENSIM - À UTILISER PLUS TARD
-// ========================================
-//$baseUrl = '/~ton_login/Project';
 
 // ========================================
 // 2. CONNEXION BDD
@@ -37,15 +31,6 @@ $db   = 'projet_ensim';
 $user = 'root';
 $pass = '';
 $charset = 'utf8mb4';
-
-
-//// ========================================
-//// SERVEUR ENSIM - À UTILISER PLUS TARD
-//// ========================================
-//$host = 'ensim-lamp.univ-lemans.fr';  // ou l'IP/host fourni
-//$db   = 'nom_de_ta_base';              // nom de la BDD
-//$user = 'ton_identifiant';             // login ENSIM
-//$pass = 'ton_mot_de_passe';            // mot de passe
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 try {
@@ -68,19 +53,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 }
 
 // ========================================
-// 4. TRAITEMENT LOGIN
+// 4. TRAITEMENT INSCRIPTION
 // ========================================
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login']) && isset($_POST['password']) && !isset($_POST['action'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
+    $nom = isset($_POST['nom']) ? $_POST['nom'] : '';
+    $prenom = isset($_POST['prenom']) ? $_POST['prenom'] : '';
+    $email = isset($_POST['email']) ? $_POST['email'] : '';
+    $login = isset($_POST['login']) ? $_POST['login'] : '';
+    $password = isset($_POST['password']) ? $_POST['password'] : '';
 
-    echo "DEBUG: Entrée dans le traitement login<br>";
+    // Validation basique
+    if (empty($nom) || empty($prenom) || empty($email) || empty($login) || empty($password)) {
+        $_SESSION['error'] = "Tous les champs sont obligatoires";
+        header("Location: {$baseUrl}/register");
+        exit;
+    }
 
+    // Vérifier si l'email existe déjà
+    $stmt = $pdo->prepare("SELECT id FROM utilisateurs WHERE mail = :mail");
+    $stmt->execute(['mail' => $email]);
+    if ($stmt->fetch()) {
+        $_SESSION['error'] = "Cet email est déjà utilisé";
+        header("Location: {$baseUrl}/register");
+        exit;
+    }
+
+    // Insertion
+    try {
+        $stmt = $pdo->prepare("INSERT INTO utilisateurs (nom, prenom, mail, login, password) VALUES (:nom, :prenom, :mail, :login, :password)");
+        $stmt->execute([
+            'nom' => $nom,
+            'prenom' => $prenom,
+            'mail' => $email,
+            'login' => $login,
+            'password' => $password
+        ]);
+
+        $_SESSION['success'] = "Inscription réussie ! Vous pouvez vous connecter.";
+        header("Location: {$baseUrl}/login");
+        exit;
+
+    } catch (PDOException $e) {
+        $_SESSION['error'] = "Une erreur est survenue lors de l'inscription";
+        header("Location: {$baseUrl}/register");
+        exit;
+    }
+}
+
+// ========================================
+// 5. TRAITEMENT LOGIN
+// ========================================
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login']) && isset($_POST['password']) && !isset($_POST['register'])) {
     $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE mail = :mail");
     $stmt->execute(['mail' => $_POST['login']]);
     $user = $stmt->fetch();
 
     if ($user && $user['password'] === $_POST['password']) {
-        echo "DEBUG: Connexion réussie, redirection...<br>";
-
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['prenom'] = $user['prenom'];
         $_SESSION['nom'] = $user['nom'];
@@ -90,8 +118,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login']) && isset($_P
         header("Location: {$baseUrl}/dashboard");
         exit;
     } else {
-        echo "DEBUG: Échec de connexion<br>";
-
         $_SESSION['error'] = "Identifiants incorrects";
         header("Location: {$baseUrl}/login");
         exit;
@@ -99,73 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login']) && isset($_P
 }
 
 // ========================================
-// 5. TRAITEMENT INSCRIPTION
-// ========================================
-// ========================================
-// 5. TRAITEMENT INSCRIPTION
-// ========================================
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
-    echo "DEBUG: Début traitement inscription<br>";
-
-    $nom = $_POST['nom'] ?? '';
-    $prenom = $_POST['prenom'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $login = $_POST['login'] ?? '';
-    $password = $_POST['password'] ?? '';
-
-    echo "Nom: $nom<br>";
-    echo "Prénom: $prenom<br>";
-    echo "Email: $email<br>";
-    echo "Login: $login<br>";
-    echo "Password: $password<br>";
-
-    // Validation basique
-    if (empty($nom) || empty($prenom) || empty($email) || empty($login) || empty($password)) {
-        echo "❌ Validation échouée - champ(s) vide(s)<br>";
-        $_SESSION['error'] = "Tous les champs sont obligatoires";
-        die("STOP - Champs vides");
-    }
-
-    echo "✅ Validation OK<br>";
-
-    // Vérifier si l'email existe déjà
-    $stmt = $pdo->prepare("SELECT id FROM utilisateurs WHERE mail = :mail");
-    $stmt->execute(['mail' => $email]);
-    if ($stmt->fetch()) {
-        echo "❌ Email déjà utilisé<br>";
-        $_SESSION['error'] = "Cet email est déjà utilisé";
-        die("STOP - Email existe");
-    }
-
-    echo "✅ Email disponible<br>";
-
-    // Insertion
-    try {
-        $stmt = $pdo->prepare("INSERT INTO utilisateurs (nom, prenom, mail, login, password) VALUES (:nom, :prenom, :mail, :login, :password)");
-        $result = $stmt->execute([
-            'nom' => $nom,
-            'prenom' => $prenom,
-            'mail' => $email,
-            'login' => $login,
-            'password' => $password
-        ]);
-
-        echo "✅ Insertion réussie ! ID: " . $pdo->lastInsertId() . "<br>";
-
-    } catch (PDOException $e) {
-        echo "❌ ERREUR SQL: " . $e->getMessage() . "<br>";
-        die("STOP - Erreur SQL");
-    }
-
-    die("STOP DEBUG - Avant redirection");
-
-    $_SESSION['success'] = "Inscription réussie ! Vous pouvez vous connecter.";
-    header("Location: {$baseUrl}/login");
-    exit;
-}
-
-// ========================================
-// 5. BLADE SETUP
+// 6. BLADE SETUP
 // ========================================
 $viewsPath = __DIR__ . '/views';
 $cachePath = __DIR__ . '/cache';
@@ -185,14 +145,13 @@ $factory = new Factory(
     new FileViewFinder(new Illuminate\Filesystem\Filesystem, [$viewsPath]),
     $events
 );
-$factory->share('baseUrl', $baseUrl); // Partager la variable baseUrl avec toutes les vues
+$factory->share('baseUrl', $baseUrl);
 
 // ========================================
-// 6. ROUTING
+// 7. ROUTING
 // ========================================
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-// Enlever le préfixe du projet
 $uri = str_replace($baseUrl, '', $uri);
 if ($uri === '') {
     $uri = '/';
@@ -206,9 +165,10 @@ switch ($uri) {
 
     case '/login':
         echo $factory->make('login', [
-            'error' => isset($_SESSION['error']) ? $_SESSION['error'] : null
+            'error' => isset($_SESSION['error']) ? $_SESSION['error'] : null,
+            'success' => isset($_SESSION['success']) ? $_SESSION['success'] : null
         ])->render();
-        unset($_SESSION['error']);
+        unset($_SESSION['error'], $_SESSION['success']);
         break;
 
     case '/register':
