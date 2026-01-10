@@ -1,5 +1,5 @@
 .btn-primary {
-    @apply font-fira bg-pj-blue text-pj-white py-4 px-8 border-none rounded-md text-base cursor-pointer no-underline inline-block transition-all duration-300 ease-in-out;
+    @apply font-fira bg-pj-blue text-pj-white py-3 px-6 md:py-4 md:px-8 border-none rounded-md text-sm md:text-base cursor-pointer no-underline inline-block transition-all duration-300 ease-in-out;
 }
 
 .btn-primary:hover {
@@ -7,7 +7,7 @@
 }
 
 .btn-secondary {
-    @apply font-fira bg-[#95a5a6] text-pj-white py-3 px-6 border-none rounded-md cursor-pointer transition-all duration-300 ease-in-out;
+    @apply font-fira text-sm md:text-base bg-[#95a5a6] text-pj-white py-1.5 px-4 md:py-3 md:px-6 border-none rounded-md cursor-pointer transition-all duration-300 ease-in-out;
 }
 
 .btn-secondary:hover {
