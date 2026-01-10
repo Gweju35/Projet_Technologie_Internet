@@ -5,10 +5,10 @@
         </div>
         <nav class="w-fit">
             <ul class="nav-menu flex list-none gap-8">
-                <li><a href="/home" class="active text-white no-underline transition-colors duration-300 ease-in-out font-semibold">Accueil</a></li>
-                <li><a href="/about" class="text-white no-underline transition-colors duration-300 ease-in-out font-semibold">À propos</a></li>
-                <li><a href="/dashboard" class="text-white no-underline transition-colors duration-300 ease-in-out font-semibold">Dashboard</a></li>
-                <li><a href="/login" class="bg-pj-blue py-2 px-6 rounded-md hover:bg-[#2980b9] hover:!text-white transition-all duration-300 ease-in-out">Connexion</a></li>
+                <li><a href="{{ $baseUrl }}/home" class="active text-white no-underline transition-colors duration-300 ease-in-out font-semibold">Accueil</a></li>
+                <li><a href="{{ $baseUrl }}/about" class="text-white no-underline transition-colors duration-300 ease-in-out font-semibold">À propos</a></li>
+                <li><a href="{{ $baseUrl }}/dashboard" class="text-white no-underline transition-colors duration-300 ease-in-out font-semibold">Dashboard</a></li>
+                <li><a href="{{ $baseUrl }}/login" class="bg-pj-blue py-2 px-6 rounded-md hover:bg-[#2980b9] hover:!text-white transition-all duration-300 ease-in-out">Connexion</a></li>
             </ul>
         </nav>
     </div>

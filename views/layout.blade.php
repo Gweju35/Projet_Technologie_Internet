@@ -7,12 +7,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="{{ $baseUrl }}/public/css/style.css">
 </head>
 <body>
 @include("sections.header")
 @yield('content')
 @include("sections.footer")
-<script src="/public/js/main.js"></script>
+<script src="{{ $baseUrl }}/public/js/main.js"></script>
 </body>
 </html>

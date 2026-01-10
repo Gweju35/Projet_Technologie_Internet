@@ -1,0 +1,14 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Rediriger vers le dossier public pour les assets
+    RewriteCond %{REQUEST_URI} ^/ENSIM/Project/public/
+    RewriteRule ^ - [L]
+
+    # Si le fichier ou dossier existe, le servir
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Sinon, tout passer à index.php
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
