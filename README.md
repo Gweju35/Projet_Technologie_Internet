@@ -137,6 +137,70 @@ Le site intègre des fonctionnalités d'authentification sécurisée, de gestion
 
 ---
 
+## 🌳 Arborescence du projet
+
+```Project/
+│
+├── assets/                          # Ressources frontend (Tailwind, JavaScript)
+│   ├── css/
+│   │   ├── buttons.css             # Styles des boutons
+│   │   └── input.css               # Styles généraux (les classes Tailwind viennent s'écrire grâce à ce fichier)
+│   ├── js/
+│   │   ├── formValidation.js       # Validation JavaScript des formulaires
+│   │   ├── header.js               # Scripts du header (menu mobile)
+│   │   └── main.js                 
+│   ├── node_modules/               # Dépendances npm (Tailwind, GSAP)
+│   ├── package.json                # Configuration npm
+│   ├── package-lock.json           
+│   └── tailwind.config.js          # Configuration Tailwind CSS
+│
+├── cache/                           # Cache des vues Blade compilées
+│
+├── public/                          # Fichiers accessibles publiquement
+│   ├── audios/
+│   │   └── temoignage.mp3          # Fichier audio
+│   ├── css/
+│   │   └── style.css               # CSS compilé (output Tailwind)
+│   ├── images/                     
+│   └── videos/
+│       └── website_video.mp4       # Fichier vidéo
+│
+├── vendor/                          # Dépendances PHP (Composer)
+│
+├── views/                           # Vues Blade
+│   ├── sections/                   # Découpage en sections réutilisables
+│   │   ├── header/
+│   │   │   ├── desktop-navigation.blade.php
+│   │   │   └── mobile-navigation.blade.php
+│   │   ├── home/                   # Sections de la page d'accueil
+│   │   │   ├── hero-header.blade.php
+│   │   │   ├── pourquoi-nous.blade.php
+│   │   │   ├── services.blade.php
+│   │   │   └── temoignages.blade.php
+│   │   ├── footer.blade.php        # Pied de page
+│   │   └── header.blade.php        # En-tête
+│   │
+│   ├── 404.blade.php                # Page erreur 404
+│   ├── about.blade.php              # Page "À propos"
+│   ├── dashboard.blade.php          # Dashboard utilisateur
+│   ├── home.blade.php               # Page d'accueil
+│   ├── layout.blade.php             # Layout principal (template de base)
+│   ├── login.blade.php              # Page de connexion
+│   ├── profile-edit.blade.php       # Page de modification du profil
+│   └── register.blade.php           # Page d'inscription
+│
+├── .gitignore                       # Fichiers à ignorer par Git
+├── .htaccess                        # Configuration Apache (URL rewriting)
+├── composer.json                    # Configuration Composer
+├── composer.lock                    # Verrouillage des versions Composer
+├── index.php                        # Point d'entrée principal (routing, logique)
+├── Project.pdf                      # Cahier des charges du projet
+└── README.md                        # Documentation du projet
+```
+
+
+---
+
 ## 🛠️ Outils et technologies utilisés
 
 ### Backend
