@@ -4,8 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx @tailwindcss/cli -i ./src/input.css -o ../public/css/style.css --watch",
-    "build": "npx @tailwindcss/cli -i ./src/input.css -o ../public/css/style.css --minify"
+    "dev": "npx @tailwindcss/cli -i ./css/input.css -o ../public/css/style.css --watch",
+    "build": "npx @tailwindcss/cli -i ./css/input.css -o ../public/css/style.css --minify"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +14,7 @@
   "dependencies": {
     "@tailwindcss/cli": "^4.1.17",
     "@tailwindcss/container-queries": "^0.1.1",
+    "gsap": "^3.14.2",
     "tailwindcss": "^4.1.17"
   },
   "devDependencies": {

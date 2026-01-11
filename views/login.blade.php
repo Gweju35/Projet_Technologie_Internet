@@ -19,7 +19,7 @@
             <form action="{{ $baseUrl }}/login" method="POST" id="loginForm" class="auth-form flex flex-col gap-4 md:gap-6">
                 <div class="form-group flex flex-col">
                     <label for="email" class="mb-2 font-semibold text-pj-greyblue">Email</label>
-                    <input type="email" id="email" name="login" required class="p-1.5 md:p-3 border border-solid border-black/15 text-sm md:text-base rounded-md focus:outline-none focus:border-pj-blue">
+                    <input type="email" id="email" name="login" required class="p-3 border border-solid border-black/15 text-sm md:text-base rounded-md focus:outline-none focus:border-pj-blue">
                     <span class="error-message text-pj-red text-sm mt-1 hidden" id="emailError"></span>
                 </div>
 
