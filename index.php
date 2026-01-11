@@ -125,6 +125,101 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login']) && isset($_P
 }
 
 // ========================================
+// 6. TRAITEMENT PRÉFÉRENCES DASHBOARD
+// ========================================
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['theme_preference']) && isset($_SESSION['user_id'])) {
+    $notifications = isset($_POST['notifications_email']) ? 1 : 0;
+    $newsletter = isset($_POST['newsletter']) ? 1 : 0;
+    $theme = $_POST['theme_preference'];
+
+    $stmt = $pdo->prepare("UPDATE utilisateurs SET notifications_email = :notif, newsletter = :news, langue_preference = :langue WHERE id = :id");
+    $stmt->execute([
+        'notif' => $notifications,
+        'news' => $newsletter,
+        'langue' => $_POST['langue_preference'],
+        'id' => $_SESSION['user_id']
+    ]);
+
+    $_SESSION['success'] = "Préférences enregistrées avec succès !";
+    header("Location: {$baseUrl}/dashboard");
+    exit;
+}
+
+
+// ========================================
+// 7. TRAITEMENT MODIFICATION PROFIL
+// ========================================
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['prenom']) && isset($_POST['nom']) && isset($_POST['email']) && isset($_SESSION['user_id'])) {
+
+    $prenom = trim($_POST['prenom']);
+    $nom = trim($_POST['nom']);
+    $email = trim($_POST['email']);
+    $telephone = trim(isset($_POST['telephone']) ? $_POST['telephone'] : '');
+    $date_naissance = isset($_POST['date_naissance']) ? $_POST['date_naissance'] : null;
+    $ville = trim(isset($_POST['ville']) ? $_POST['ville'] : '');
+    $pays = trim(isset($_POST['pays']) ? $_POST['pays'] : 'France');
+    $bio = trim(isset($_POST['bio']) ? $_POST['bio'] : '');
+    $langue = isset($_POST['langue_preference']) ? $_POST['langue_preference'] : 'fr';
+
+    // Validation
+    if (empty($prenom) || empty($nom) || empty($email)) {
+        $_SESSION['error'] = "Le prénom, nom et email sont obligatoires";
+        header("Location: {$baseUrl}/profile/edit");
+        exit;
+    }
+
+    // Vérifier si l'email est déjà utilisé par un autre utilisateur
+    $stmt = $pdo->prepare("SELECT id FROM utilisateurs WHERE mail = :mail AND id != :id");
+    $stmt->execute(['mail' => $email, 'id' => $_SESSION['user_id']]);
+    if ($stmt->fetch()) {
+        $_SESSION['error'] = "Cet email est déjà utilisé par un autre compte";
+        header("Location: {$baseUrl}/profile/edit");
+        exit;
+    }
+
+    // Mise à jour
+    try {
+        $stmt = $pdo->prepare("UPDATE utilisateurs SET 
+            prenom = :prenom, 
+            nom = :nom, 
+            mail = :email, 
+            telephone = :telephone, 
+            date_naissance = :date_naissance, 
+            ville = :ville, 
+            pays = :pays, 
+            bio = :bio,
+            langue_preference = :langue
+            WHERE id = :id");
+
+        $stmt->execute([
+            'prenom' => $prenom,
+            'nom' => $nom,
+            'email' => $email,
+            'telephone' => $telephone ?: null,
+            'date_naissance' => $date_naissance ?: null,
+            'ville' => $ville ?: null,
+            'pays' => $pays,
+            'bio' => $bio ?: null,
+            'langue' => $langue,
+            'id' => $_SESSION['user_id']
+        ]);
+
+        // Mettre à jour la session
+        $_SESSION['prenom'] = $prenom;
+        $_SESSION['nom'] = $nom;
+
+        $_SESSION['success'] = "Profil modifié avec succès !";
+        header("Location: {$baseUrl}/profile/edit");
+        exit;
+
+    } catch (PDOException $e) {
+        $_SESSION['error'] = "Une erreur est survenue lors de la modification";
+        header("Location: {$baseUrl}/profile/edit");
+        exit;
+    }
+}
+
+// ========================================
 // 6. BLADE SETUP
 // ========================================
 $viewsPath = __DIR__ . '/views';
@@ -178,18 +273,44 @@ switch ($uri) {
         unset($_SESSION['error']);
         break;
 
+    case '/logout':
+        header("Location: {$baseUrl}/");
+        exit;
+        break;
+
     case '/dashboard':
         if (!isset($_SESSION['user_id'])) {
             header("Location: {$baseUrl}/login");
             exit;
         }
 
+        // Récupérer toutes les infos de l'utilisateur
+        $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE id = :id");
+        $stmt->execute(['id' => $_SESSION['user_id']]);
+        $userData = $stmt->fetch();
+
         echo $factory->make('dashboard', [
-            'user' => [
-                'prenom' => $_SESSION['prenom'],
-                'nom' => $_SESSION['nom']
-            ]
+            'user' => $userData
         ])->render();
+        break;
+
+    case '/profile/edit':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: {$baseUrl}/login");
+            exit;
+        }
+
+        // Récupérer les données de l'utilisateur
+        $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE id = :id");
+        $stmt->execute(['id' => $_SESSION['user_id']]);
+        $userData = $stmt->fetch();
+
+        echo $factory->make('profile-edit', [
+            'user' => $userData,
+            'success' => isset($_SESSION['success']) ? $_SESSION['success'] : null,
+            'error' => isset($_SESSION['error']) ? $_SESSION['error'] : null
+        ])->render();
+        unset($_SESSION['success'], $_SESSION['error']);
         break;
 
     case '/about':
