@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
     $login = isset($_POST['login']) ? $_POST['login'] : '';
     $password = isset($_POST['password']) ? $_POST['password'] : '';
 
-    // Validation des champs
+    // Validation basique
     if (empty($nom) || empty($prenom) || empty($email) || empty($login) || empty($password)) {
         $_SESSION['error'] = "Tous les champs sont obligatoires";
         header("Location: {$baseUrl}/register");
@@ -68,7 +68,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
         exit;
     }
 
-    // Insertion dans table
+    // hashage du mot de passe
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    // Insertion
     try {
         $stmt = $pdo->prepare("INSERT INTO utilisateurs (nom, prenom, mail, login, password) VALUES (:nom, :prenom, :mail, :login, :password)");
         $stmt->execute([
@@ -76,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
             'prenom' => $prenom,
             'mail' => $email,
             'login' => $login,
-            'password' => $password
+            'password' => $hashedPassword  // ✅ Utiliser le hash
         ]);
 
         $_SESSION['success'] = "Inscription réussie ! Vous pouvez vous connecter.";
@@ -96,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login']) && isset($_P
     $stmt->execute(['mail' => $_POST['login']]);
     $user = $stmt->fetch();
 
-    if ($user && $user['password'] === $_POST['password']) {
+    if ($user && password_verify($_POST['password'], $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['prenom'] = $user['prenom'];
         $_SESSION['nom'] = $user['nom'];
