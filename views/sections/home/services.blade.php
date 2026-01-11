@@ -1,4 +1,4 @@
-<section class="main-content py-8 md:pt-16 pb-0 bg-pj-white">
+<section class="main-content py-8 md:py-16 bg-pj-white">
     <div class="container">
         <h2 class="text-center text-2xl md:text-4xl mb-8 md:mb-12 text-pj-greyblue font-grotesk font-semibold">Nos Services</h2>
         <div class="services-grid grid [grid-template-columns:repeat(auto-fit,minmax(250px,1fr))] gap-4 md:gap-8">
