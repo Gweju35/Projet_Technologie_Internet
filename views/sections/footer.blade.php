@@ -19,11 +19,11 @@
             <div class="footer-section flex flex-col gap-4">
                 <h3 class="text-pj-blue font-bold">Suivez-nous</h3>
                 <div class="flex flex-row gap-2">
-                    <a href="/">Facebook</a>
+                    <a href="https://www.facebook.com/">Facebook</a>
                     <p>|</p>
-                    <a href="/">Twitter</a>
+                    <a href="https://x.com/">Twitter</a>
                     <p>|</p>
-                    <a href="/">LinkedIn</a>
+                    <a href="https://www.linkedin.com/">LinkedIn</a>
                 </div>
             </div>
         </div>
