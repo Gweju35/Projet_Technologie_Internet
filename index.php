@@ -223,15 +223,15 @@ switch ($uri) {
 
     case '/login':
         echo $factory->make('login', [
-            'error' => isset($_SESSION['error']) ? $_SESSION['error'] : null,
-            'success' => isset($_SESSION['success']) ? $_SESSION['success'] : null
+            'error' => $_SESSION['error'] ?? null,
+            'success' => $_SESSION['success'] ?? null
         ])->render();
         unset($_SESSION['error'], $_SESSION['success']);
         break;
 
     case '/register':
         echo $factory->make('register', [
-            'error' => isset($_SESSION['error']) ? $_SESSION['error'] : null
+            'error' => $_SESSION['error'] ?? null
         ])->render();
         unset($_SESSION['error']);
         break;
@@ -270,8 +270,8 @@ switch ($uri) {
 
         echo $factory->make('profile-edit', [
             'user' => $userData,
-            'success' => isset($_SESSION['success']) ? $_SESSION['success'] : null,
-            'error' => isset($_SESSION['error']) ? $_SESSION['error'] : null
+            'success' => $_SESSION['success'] ?? null,
+            'error' => $_SESSION['error'] ?? null
         ])->render();
         unset($_SESSION['success'], $_SESSION['error']);
         break;
