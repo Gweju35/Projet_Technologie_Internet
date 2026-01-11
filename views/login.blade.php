@@ -5,6 +5,17 @@
     <div class="container">
         <div class="auth-box bg-pj-white max-w-lg my-0 mx-auto p-8 md:p-12 rounded-lg shadow-md">
             <h2 class="text-center text-pj-blue mb-6 md:mb-8 font-grotesk font-bold text-base md:text-xl">Connexion</h2>
+            @if(isset($error))
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                    {{ $error }}
+                </div>
+            @endif
+
+            @if(isset($success))
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                    {{ $success }}
+                </div>
+            @endif
             <form action="{{ $baseUrl }}/login" method="POST" id="loginForm" class="auth-form flex flex-col gap-4 md:gap-6">
                 <div class="form-group flex flex-col">
                     <label for="email" class="mb-2 font-semibold text-pj-greyblue">Email</label>

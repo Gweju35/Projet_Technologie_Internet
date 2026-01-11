@@ -40,7 +40,6 @@
                         <label for="password" class="mb-2 font-semibold text-pj-greyblue text-sm md:text-base">Mot de passe</label>
                         <input type="password" id="password" name="password" required class="p-1.5 md:p-3 border border-solid border-black/15 text-base rounded-md focus:outline-none focus:border-pj-blue">
                         <span class="error-message text-pj-red text-sm mt-1 hidden" id="passwordError"></span>
-                        <small class="text-pj-grey text-xs mt-1">Minimum 8 caractères, incluant lettres et chiffres</small>
                     </div>
 
                     <div class="form-group flex flex-col">
