@@ -117,12 +117,15 @@
                 </div>
             </div>
 
-            <!-- Call to Action -->
-            <div class="about-cta bg-gradient-to-br from-pj-blue-2 to-pj-purple text-pj-white p-8 md:p-12 rounded-lg text-center">
-                <h2 class="text-2xl md:text-4xl mb-4 font-grotesk font-bold">Rejoignez-nous dès aujourd'hui</h2>
-                <p class="text-base md:text-lg mb-4 md:mb-8">Faites partie de notre communauté grandissante</p>
-                <a href="/register" class="btn-primary">Créer un compte</a>
-            </div>
+            <!-- CTA -->
+            @if(!isset($_SESSION['user_id']))
+                <div class="about-cta bg-gradient-to-br from-pj-blue-2 to-pj-purple text-pj-white p-8 md:p-12 rounded-lg text-center">
+                    <h2 class="text-2xl md:text-4xl mb-4 font-grotesk font-bold">Rejoignez-nous dès aujourd'hui</h2>
+                    <p class="text-base md:text-lg mb-4 md:mb-8">Faites partie de notre communauté grandissante</p>
+                    <a href="{{ $baseUrl }}/register" class="bg-green-500 !text-white py-2 px-6 rounded-md hover:bg-green-600 transition-all duration-300 ease-in-out font-semibold">Créer un compte</a>
+                </div>
+            @endif
+
         </div>
     </section>
 
