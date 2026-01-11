@@ -12,7 +12,8 @@
 
                 <!-- Carte Mon Profil -->
                 <div class="dashboard-card bg-pj-white p-8 rounded-lg shadow-md">
-                    <h3 class="text-pj-grey mb-4 md:mb-6 pb-2 border-b border-b-pj-blue text-sm md:text-base">Mon Profil</h3>
+                    <h3 class="text-pj-grey mb-4 md:mb-6 pb-2 border-b border-b-pj-blue text-sm md:text-base">Mon
+                        Profil</h3>
                     <div class="profile-info mb-4 md:mb-6">
                         <p class="mb-2 md:mb-3.5 text-sm md:text-base">
                             <strong>Nom complet:</strong> {{ $user['prenom'] }} {{ $user['nom'] }}
@@ -22,7 +23,8 @@
                         </p>
                         @if($user['date_naissance'])
                             <p class="mb-2 md:mb-3.5 text-sm md:text-base">
-                                <strong>Date de naissance:</strong> {{ date('d/m/Y', strtotime($user['date_naissance'])) }}
+                                <strong>Date de
+                                    naissance:</strong> {{ date('d/m/Y', strtotime($user['date_naissance'])) }}
                             </p>
                         @endif
                         @if($user['telephone'])
@@ -40,18 +42,20 @@
                 </div>
 
                 <!-- Carte Préférences -->
-                    @if($user['bio'])
-                <div class="dashboard-card bg-pj-white p-4 md:p-8 rounded-lg shadow-md">
-                    <h3 class="text-pj-grey mb-4 md:mb-6 pb-2 border-b border-b-pj-blue text-sm md:text-base">Biographie</h3>
+                @if($user['bio'])
+                    <div class="dashboard-card bg-pj-white p-4 md:p-8 rounded-lg shadow-md">
+                        <h3 class="text-pj-grey mb-4 md:mb-6 pb-2 border-b border-b-pj-blue text-sm md:text-base">
+                            Biographie</h3>
                         <p class="mb-2 md:mb-3.5 text-sm md:text-base">
                             {{ $user['bio'] }}
                         </p>
-                </div>
-                    @endif
+                    </div>
+                @endif
 
                 <!-- Carte Informations du compte -->
                 <div class="dashboard-card bg-pj-white p-4 md:p-8 rounded-lg shadow-md col-span-full">
-                    <h3 class="text-pj-grey mb-4 md:mb-6 pb-2 border-b border-b-pj-blue text-sm md:text-base">Informations du compte</h3>
+                    <h3 class="text-pj-grey mb-4 md:mb-6 pb-2 border-b border-b-pj-blue text-sm md:text-base">
+                        Informations du compte</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="stat-card p-4 bg-blue-50 rounded-lg">
                             <p class="text-sm text-gray-600">Compte créé</p>
@@ -64,10 +68,14 @@
                         <div class="stat-card p-4 bg-purple-50 rounded-lg">
                             <p class="text-sm text-gray-600">Langue</p>
                             <p class="text-xl font-bold text-purple-600">
-                                @if($user['langue_preference'] == 'fr') Français
-                                @elseif($user['langue_preference'] == 'en') English
-                                @elseif($user['langue_preference'] == 'es') Español
-                                @else Deutsch
+                                @if($user['langue_preference'] === 'fr')
+                                    Français
+                                @elseif($user['langue_preference'] === 'en')
+                                    English
+                                @elseif($user['langue_preference'] === 'es')
+                                    Español
+                                @else
+                                    Deutsch
                                 @endif
                             </p>
                         </div>

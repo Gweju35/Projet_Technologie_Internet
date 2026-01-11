@@ -21,7 +21,8 @@
 
                     <!-- Informations de base -->
                     <div class="form-section">
-                        <h3 class="text-lg font-semibold text-pj-grey mb-4 pb-2 border-b border-pj-blue">Informations personnelles</h3>
+                        <h3 class="text-lg font-semibold text-pj-grey mb-4 pb-2 border-b border-pj-blue">Informations
+                            personnelles</h3>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="form-group">
@@ -50,15 +51,18 @@
                         </div>
 
                         <div class="form-group mt-4">
-                            <label for="date_naissance" class="block mb-2 font-semibold text-pj-greyblue">Date de naissance</label>
-                            <input type="date" id="date_naissance" name="date_naissance" value="{{ $user['date_naissance'] ?? '' }}"
+                            <label for="date_naissance" class="block mb-2 font-semibold text-pj-greyblue">Date de
+                                naissance</label>
+                            <input type="date" id="date_naissance" name="date_naissance"
+                                   value="{{ $user['date_naissance'] ?? '' }}"
                                    class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-pj-blue">
                         </div>
                     </div>
 
                     <!-- Localisation -->
                     <div class="form-section">
-                        <h3 class="text-lg font-semibold text-pj-grey mb-4 pb-2 border-b border-pj-blue">Localisation</h3>
+                        <h3 class="text-lg font-semibold text-pj-grey mb-4 pb-2 border-b border-pj-blue">
+                            Localisation</h3>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="form-group">
@@ -77,7 +81,8 @@
 
                     <!-- Bio -->
                     <div class="form-section">
-                        <h3 class="text-lg font-semibold text-pj-grey mb-4 pb-2 border-b border-pj-blue">À propos de moi</h3>
+                        <h3 class="text-lg font-semibold text-pj-grey mb-4 pb-2 border-b border-pj-blue">À propos de
+                            moi</h3>
 
                         <div class="form-group">
                             <label for="bio" class="block mb-2 font-semibold text-pj-greyblue">Biographie</label>
@@ -88,26 +93,38 @@
 
                     <!-- Langue (remplace le thème) -->
                     <div class="form-section">
-                        <h3 class="text-lg font-semibold text-pj-grey mb-4 pb-2 border-b border-pj-blue">Préférences</h3>
+                        <h3 class="text-lg font-semibold text-pj-grey mb-4 pb-2 border-b border-pj-blue">
+                            Préférences</h3>
 
                         <div class="form-group">
-                            <label for="langue_preference" class="block mb-2 font-semibold text-pj-greyblue">Langue préférée</label>
+                            <label for="langue_preference" class="block mb-2 font-semibold text-pj-greyblue">Langue
+                                préférée</label>
                             <select id="langue_preference" name="langue_preference"
                                     class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-pj-blue">
-                                <option value="fr" {{ ($user['langue_preference'] ?? 'fr') == 'fr' ? 'selected' : '' }}>Français</option>
-                                <option value="en" {{ ($user['langue_preference'] ?? 'fr') == 'en' ? 'selected' : '' }}>English</option>
-                                <option value="es" {{ ($user['langue_preference'] ?? 'fr') == 'es' ? 'selected' : '' }}>Español</option>
-                                <option value="de" {{ ($user['langue_preference'] ?? 'fr') == 'de' ? 'selected' : '' }}>Deutsch</option>
+                                <option value="fr" {{ ($user['langue_preference'] ?? 'fr') === 'fr' ? 'selected' : '' }}>
+                                    Français
+                                </option>
+                                <option value="en" {{ ($user['langue_preference'] ?? 'fr') === 'en' ? 'selected' : '' }}>
+                                    English
+                                </option>
+                                <option value="es" {{ ($user['langue_preference'] ?? 'fr') === 'es' ? 'selected' : '' }}>
+                                    Español
+                                </option>
+                                <option value="de" {{ ($user['langue_preference'] ?? 'fr') === 'de' ? 'selected' : '' }}>
+                                    Deutsch
+                                </option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Boutons -->
                     <div class="flex gap-4 justify-end mt-6">
-                        <a href="{{ $baseUrl }}/dashboard" class="flex items-center px-6 py-3 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition-all cursor-pointer">
+                        <a href="{{ $baseUrl }}/dashboard"
+                           class="flex items-center px-6 py-3 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition-all cursor-pointer">
                             Annuler
                         </a>
-                        <button type="submit" class="px-6 py-3 bg-pj-blue text-white rounded-md hover:bg-[#2980b9] transition-all cursor-pointer">
+                        <button type="submit"
+                                class="px-6 py-3 bg-pj-blue text-white rounded-md hover:bg-[#2980b9] transition-all cursor-pointer">
                             Enregistrer les modifications
                         </button>
                     </div>
