@@ -139,7 +139,8 @@ Le site intègre des fonctionnalités d'authentification sécurisée, de gestion
 
 ## 🌳 Arborescence du projet
 
-```Project/
+```
+Project/
 │
 ├── assets/                          # Ressources frontend (Tailwind, JavaScript)
 │   ├── css/
