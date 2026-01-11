@@ -13,25 +13,19 @@ use Illuminate\View\Engines\EngineResolver;
 use Illuminate\View\Engines\CompilerEngine;
 use Illuminate\View\Compilers\BladeCompiler;
 
-// ========================================
-// 1. SESSION
-// ========================================
 session_start();
 
-// ========================================
-// BASE URL pour les assets
-// ========================================
+// URL de base pour les redirections
 $baseUrl = '/ENSIM/Project';
 
-// ========================================
-// 2. CONNEXION BDD
-// ========================================
+// Connexion à la Base de Données
 $host = '127.0.0.1';
-$db   = 'projet_ensim';
+$db   = 'projet_ensim'; // nom de la base
 $user = 'root';
 $pass = '';
 $charset = 'utf8mb4';
 
+// Pour PDO
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 try {
     $pdo = new PDO($dsn, $user, $pass, [
@@ -42,9 +36,7 @@ try {
     die("Erreur BDD : " . $e->getMessage());
 }
 
-// ========================================
-// 3. TRAITEMENT DÉCONNEXION
-// ========================================
+// Traitement de le déconnexion
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'logout') {
     session_unset();
     session_destroy();
@@ -52,9 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     exit;
 }
 
-// ========================================
-// 4. TRAITEMENT INSCRIPTION
-// ========================================
+// Traitement de l'inscription
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
     $nom = isset($_POST['nom']) ? $_POST['nom'] : '';
     $prenom = isset($_POST['prenom']) ? $_POST['prenom'] : '';
@@ -62,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
     $login = isset($_POST['login']) ? $_POST['login'] : '';
     $password = isset($_POST['password']) ? $_POST['password'] : '';
 
-    // Validation basique
+    // Validation des champs
     if (empty($nom) || empty($prenom) || empty($email) || empty($login) || empty($password)) {
         $_SESSION['error'] = "Tous les champs sont obligatoires";
         header("Location: {$baseUrl}/register");
@@ -78,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
         exit;
     }
 
-    // Insertion
+    // Insertion dans table
     try {
         $stmt = $pdo->prepare("INSERT INTO utilisateurs (nom, prenom, mail, login, password) VALUES (:nom, :prenom, :mail, :login, :password)");
         $stmt->execute([
@@ -100,9 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
     }
 }
 
-// ========================================
-// 5. TRAITEMENT LOGIN
-// ========================================
+// Traitement de la connexion
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login']) && isset($_POST['password']) && !isset($_POST['register'])) {
     $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE mail = :mail");
     $stmt->execute(['mail' => $_POST['login']]);
@@ -124,31 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login']) && isset($_P
     }
 }
 
-// ========================================
-// 6. TRAITEMENT PRÉFÉRENCES DASHBOARD
-// ========================================
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['theme_preference']) && isset($_SESSION['user_id'])) {
-    $notifications = isset($_POST['notifications_email']) ? 1 : 0;
-    $newsletter = isset($_POST['newsletter']) ? 1 : 0;
-    $theme = $_POST['theme_preference'];
-
-    $stmt = $pdo->prepare("UPDATE utilisateurs SET notifications_email = :notif, newsletter = :news, langue_preference = :langue WHERE id = :id");
-    $stmt->execute([
-        'notif' => $notifications,
-        'news' => $newsletter,
-        'langue' => $_POST['langue_preference'],
-        'id' => $_SESSION['user_id']
-    ]);
-
-    $_SESSION['success'] = "Préférences enregistrées avec succès !";
-    header("Location: {$baseUrl}/dashboard");
-    exit;
-}
-
-
-// ========================================
-// 7. TRAITEMENT MODIFICATION PROFIL
-// ========================================
+// Traitement de la modification du profil
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['prenom']) && isset($_POST['nom']) && isset($_POST['email']) && isset($_SESSION['user_id'])) {
 
     $prenom = trim($_POST['prenom']);
@@ -177,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['prenom']) && isset($_
         exit;
     }
 
-    // Mise à jour
+    // Mise à jour de la table
     try {
         $stmt = $pdo->prepare("UPDATE utilisateurs SET 
             prenom = :prenom, 
@@ -219,9 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['prenom']) && isset($_
     }
 }
 
-// ========================================
-// 6. BLADE SETUP
-// ========================================
+// Setup de Blade
 $viewsPath = __DIR__ . '/views';
 $cachePath = __DIR__ . '/cache';
 
@@ -242,9 +204,7 @@ $factory = new Factory(
 );
 $factory->share('baseUrl', $baseUrl);
 
-// ========================================
-// 7. ROUTING
-// ========================================
+// Mise en place des routes dans le site
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 $uri = str_replace($baseUrl, '', $uri);

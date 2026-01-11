@@ -18,13 +18,6 @@
                     <span class="error-message text-pj-red text-sm mt-1 hidden" id="passwordError"></span>
                 </div>
 
-                <div class="form-options flex justify-between items-center">
-                    <label class="checkbox-label flex items-center gap-2 cursor-pointer text-sm md:text-base">
-                        <input type="checkbox" id="remember" name="remember">
-                        Se souvenir de moi
-                    </label>
-                </div>
-
                 <button type="submit" class="btn-primary">Se connecter</button>
             </form>
 
