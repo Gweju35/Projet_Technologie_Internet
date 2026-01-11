@@ -5,7 +5,7 @@
             <!-- Message de bienvenue -->
             <div class="welcome-message bg-gradient-to-br from-pj-blue-2 to-pj-purple text-pj-white p-4 md:p-8 rounded-lg mb-4 md:mb-8">
                 <h2 class="text-2xl md:text-4xl">Bienvenue, {{ $user['prenom'] }} {{ $user['nom'] }} !</h2>
-                <p class="mt-2">Membre depuis: {{ date('d/m/Y', strtotime($user['created_at'])) }}</p>
+                <p class="mt-2">Membre depuis le : {{ date('d/m/Y', strtotime($user['created_at'])) }}</p>
             </div>
 
             <div class="dashboard-grid grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
