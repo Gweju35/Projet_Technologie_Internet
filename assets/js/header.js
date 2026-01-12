@@ -1,4 +1,4 @@
-gsap.registerPlugin(ScrollTrigger);
+// gsap.registerPlugin(ScrollTrigger);
 
 export default function initHeader() {
     openNavigationMobile();
@@ -31,12 +31,12 @@ function openNavigationMobile() {
         duration: 0.7
     }, 0);
 
-    tl.to([bottomButtons, menuItems], {
-        autoAlpha: 1,
-        x: 0,
-        ease: 'power4.inOut',
-        duration: 0.5
-    }, 0.4);
+    // tl.to([bottomButtons, menuItems], {
+    //     autoAlpha: 1,
+    //     x: 0,
+    //     ease: 'power4.inOut',
+    //     duration: 0.5
+    // }, 0.4);
 
     tl.to(menuButtonWrapper, {
         translateY: "-50%",

@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ $baseUrl }}/public/css/style.css">
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+{{--    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>--}}
 
     <script type="module" src="{{ $baseUrl }}/assets/js/main.js"></script>
 </head>
