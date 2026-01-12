@@ -19,20 +19,23 @@ session_start();
 $baseUrl = '/ENSIM/Project';
 
 // Connexion à la Base de Données
-$host = '127.0.0.1';
+$host = '127.0.0.1'; // adresse du serveur MySQL (localhost)
 $db   = 'projet_ensim'; // nom de la base
-$user = 'root';
+$user = 'root'; // identifiant de connexion
 $pass = '';
-$charset = 'utf8mb4';
+$charset = 'utf8mb4'; // encodage des caractères
 
 // Pour PDO
+// DSN = Data Source Name → description de la connexion
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 try {
+    // Création de l'objet PDO (connexion réelle à la BDD)
     $pdo = new PDO($dsn, $user, $pass, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // Les erreurs SQL déclenchent des exceptions
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, // Les résultats seront retournés sous forme de tableaux associatifs
     ]);
 } catch (\PDOException $e) {
+    // En cas d'échec de connexion, on arrête tout et on affiche l'erreur
     die("Erreur BDD : " . $e->getMessage());
 }
 
@@ -79,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
             'prenom' => $prenom,
             'mail' => $email,
             'login' => $login,
-            'password' => $hashedPassword  // ✅ Utiliser le hash
+            'password' => $hashedPassword
         ]);
 
         $_SESSION['success'] = "Inscription réussie ! Vous pouvez vous connecter.";
@@ -186,6 +189,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['prenom']) && isset($_
     }
 }
 
+
+
 // Setup de Blade
 $viewsPath = __DIR__ . '/views';
 $cachePath = __DIR__ . '/cache';
@@ -206,6 +211,8 @@ $factory = new Factory(
     $events
 );
 $factory->share('baseUrl', $baseUrl);
+
+
 
 // Mise en place des routes dans le site
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
