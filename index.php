@@ -43,17 +43,23 @@ try {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'logout') {
     session_unset();
     session_destroy();
+
+    // Supprimer les cookies
+    setcookie('user_prenom', '', time() - 3600, '/');
+    setcookie('user_email', '', time() - 3600, '/');
+    setcookie('last_login', '', time() - 3600, '/');
+
     header("Location: {$baseUrl}/");
     exit;
 }
 
 // Traitement de l'inscription
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
-    $nom = isset($_POST['nom']) ? $_POST['nom'] : '';
-    $prenom = isset($_POST['prenom']) ? $_POST['prenom'] : '';
-    $email = isset($_POST['email']) ? $_POST['email'] : '';
-    $login = isset($_POST['login']) ? $_POST['login'] : '';
-    $password = isset($_POST['password']) ? $_POST['password'] : '';
+    $nom = $_POST['nom'] ?? '';
+    $prenom = $_POST['prenom'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $login = $_POST['login'] ?? '';
+    $password = $_POST['password'] ?? '';
 
     // Validation basique
     if (empty($nom) || empty($prenom) || empty($email) || empty($login) || empty($password)) {
@@ -107,7 +113,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login']) && isset($_P
         $_SESSION['prenom'] = $user['prenom'];
         $_SESSION['nom'] = $user['nom'];
 
-        setcookie('prenom', $user['prenom'], time() + 3600, "/");
+        $rememberMe = isset($_POST['remember']);
+        $cookieDuration = $rememberMe ? (86400 * 30) : 3600;
+
+        // Cookies
+        setcookie('user_prenom', $user['prenom'], [
+            'expires' => time() + $cookieDuration,      // expire dans 1 heure
+            'path' => '/',                    // disponible sur tout le site
+            'secure' => false,                // true si HTTPS (false en local)
+            'httponly' => true,               // Pas accessible via JS
+            'samesite' => 'Lax'               // Protection
+        ]);
+
+        setcookie('user_email', $user['mail'], [
+            'expires' => time() + $cookieDuration,
+            'path' => '/',
+            'httponly' => true,
+            'samesite' => 'Lax'
+        ]);
+
+        // Cookies supplémentaires pour la dernière connexion
+        setcookie('last_login', date('d/m/Y H:i:s'), [
+            'expires' => time() + (86400 * 30), // 30 jours
+            'path' => '/',
+            'httponly' => true,
+            'samesite' => 'Lax'
+        ]);
 
         header("Location: {$baseUrl}/dashboard");
         exit;
