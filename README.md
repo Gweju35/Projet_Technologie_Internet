@@ -61,7 +61,7 @@ Le site intègre des fonctionnalités d'authentification sécurisée, de gestion
 
 1. **Cloner le projet**
    ```bash
-   git clone https://github.com/Gweju35/Projet_Technologie_Internet.git
+   git clone https://github.com/Gweju35/Plateforme_web
    cd Project
    ```
 
